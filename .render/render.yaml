@@ -1,8 +1,7 @@
 services:
   - type: web
-    name: ramba-backend
+    name: ramba-server
     env: node
-    plan: free
-    buildCommand: "npm install"
-    startCommand: "npm start"
-    rootDir: ./
+    buildCommand: cd client && npm install && npm run build
+    startCommand: node server.js
+    rootDir: .

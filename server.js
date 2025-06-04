@@ -1,10 +1,15 @@
 const express = require("express");
+const path = require("path");
 const fetch = require("node-fetch");
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// 👉 정적 파일 서빙
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+// ✅ API 라우트
 app.get("/api/character", async (req, res) => {
   const { name, server } = req.query;
   const apiKey = process.env.NEXON_API_KEY;
@@ -24,6 +29,11 @@ app.get("/api/character", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: "API 요청 실패" });
   }
+});
+
+// 👉 React 앱 모든 경로에 대응
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.listen(PORT, () => {
