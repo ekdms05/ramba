@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 👉 정적 파일 서빙
+// 👉 React 빌드 파일 서빙
 app.use(express.static(path.join(__dirname, "client", "build")));
 
 // ✅ API 라우트
@@ -31,7 +31,7 @@ app.get("/api/character", async (req, res) => {
   }
 });
 
-// 👉 React 앱 모든 경로에 대응
+// 👉 모든 나머지 경로는 React index.html로 처리
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
